@@ -9,11 +9,12 @@
       docker_image:
         name: mayank8529/calculator:latest
         source: pull
-#
-#    - name: Start docker service
-#      service:
-#        name: docker
-#        state: started
+
+    - name: Remove existing container if it exists
+      shell: |
+        if [ "$(docker ps -a -q -f name=Calculator)" ]; then
+          docker rm -f Calculator
+        fi
 
     - name: Running container
       shell: docker run -it -d --name Calculator mayank8529/calculator
