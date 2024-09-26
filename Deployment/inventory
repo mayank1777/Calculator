@@ -1,1 +1,2 @@
-localhost ansible_user=mayank
+localhost ansible_connection= /opt/anaconda3/bin/python
+ansible_user=mayank
