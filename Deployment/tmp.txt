@@ -1,0 +1,66 @@
+pipeline {
+    agent any
+
+    tools {
+        maven 'Maven3' // Ensure this matches the name configured in Jenkins' global tools configuration
+    }
+
+    stages {
+        stage('Stage 1: Git Clone') {
+            steps {
+                git branch: 'master', url: 'https://github.com/mayank1777/Calculator.git'
+            }
+        }
+
+        stage('Stage 2: Maven Build') {
+            steps {
+                sh 'mvn clean install'
+            }
+        }
+
+        stage('Stage 3: Build Docker Image') {
+            steps {
+                script {
+                    // Build Docker image and store the Docker image object
+                    def dockerImage = docker.build("mayank8529/calculator:latest")
+                    // Store the image name or ID in an environment variable for use in subsequent stages
+                    env.DOCKER_IMAGE = dockerImage.id
+                }
+            }
+        }
+
+        stage('Stage 4: Push Docker Image to Hub') {
+            steps {
+                script {
+                    // Push the Docker image to Docker Hub using credentials
+                    docker.withRegistry('', 'DockerHubCred') {
+                        docker.image(env.DOCKER_IMAGE).push('latest')
+                    }
+                }
+            }
+        }
+
+        stage('Stage 5: Clean Docker Images') {
+            steps {
+                script {
+                    // Prune containers and images to clean up space
+                    sh 'docker container prune -f'
+                    sh 'docker image prune -f'
+                }
+            }
+        }
+
+        stage('Stage 6: Ansible Deployment') {
+            steps {
+                ansiblePlaybook becomeUser: null,
+                colorized: true,
+                credentialsId: 'localhost',
+                disableHostKeyChecking: true,
+                installation: 'Ansible',
+                inventory: 'Deployment/inventory',
+                playbook: 'Deployment/deploy.yml',
+                sudoUser: null
+            }
+        }
+    }
+}
