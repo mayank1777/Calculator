@@ -1,2 +1,4 @@
 2024-09-26 15:54:47.672 [main] ERROR org.example.Main - Attempted to compute ln of non-positive number: 0.0
 2024-09-26 15:54:47.674 [main] ERROR org.example.Main - Attempted to compute square root of negative number: -9.0
+2024-09-26 16:04:04.205 [main] ERROR org.example.Main - Attempted to compute ln of non-positive number: 0.0
+2024-09-26 16:04:04.207 [main] ERROR org.example.Main - Attempted to compute square root of negative number: -9.0
