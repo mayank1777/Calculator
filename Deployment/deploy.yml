@@ -1,3 +1,9 @@
+#The purpose of this playbook is to automate the deployment of the calculator Docker image on a host machine.
+#It handles pulling the latest version of the image, ensuring that any previously running instance of the container is removed,
+#and then starting the new container in a clean state.
+#      Executes shell commands. Here, it checks if a Docker container named "Calculator" already exists (docker ps -a -q -f name=Calculator),
+#  and if it does, it removes it (docker rm -f Calculator).
+#  This ensures that any existing container with the same name is deleted before a new one is created.
 ---
 - name: Pull Docker Image of Calculator
   hosts: localhost
