@@ -23,6 +23,7 @@ public class Main {
             while (!scanner.hasNextInt()) {
                 System.out.print("Invalid input. Enter a number between 0 and 4: ");
                 scanner.next();
+
             }
             choice = scanner.nextInt();
 
