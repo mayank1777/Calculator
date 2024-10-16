@@ -12,6 +12,7 @@ public class Main {
         int choice;
 
         do {
+
             System.out.println("\n--- Scientific Calculator ---");
             System.out.println("1. Square Root (√x)");
             System.out.println("2. Factorial (x!)");
